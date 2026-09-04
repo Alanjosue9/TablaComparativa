@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3E7C87">
+<title>Tabla comparativa · Haciendas del Caribe</title>
+<link rel="icon" href="fotos/logo.png">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img src="fotos/logo.png" alt="">
+    <div>
+      <h1>Tabla comparativa</h1>
+      <p>Haciendas del Caribe · Distrito VII</p>
+    </div>
+    <span class="conexion" id="conexion" title="Estado de la conexión"></span>
+  </header>
+
+  <div id="aviso-config" class="aviso oculto">
+    <b>Falta conectar la base de datos.</b>
+    <span>Abre el archivo <code>config.js</code> y pega ahí los datos de tu proyecto de Firebase. Las instrucciones están en LEEME.md.</span>
+  </div>
+
+  <section class="panel">
+    <h2>Periodo del informe</h2>
+    <div class="periodo">
+      <div class="field"><label for="f-sem">Semana</label><input id="f-sem" type="number" min="1" max="14" inputmode="numeric"></div>
+      <div class="field"><label for="f-tri">Trimestre</label>
+        <select id="f-tri"><option value="1">1er</option><option value="2">2do</option><option value="3">3er</option><option value="4">4to</option></select>
+      </div>
+      <div class="field"><label for="f-anio">Año</label><input id="f-anio" type="number" min="2024" max="2100" inputmode="numeric"></div>
+    </div>
+    <p class="eco" id="eco"></p>
+    <p class="edicion oculto" id="edicion">Estás editando una semana que ya estaba guardada. Al guardar, se reemplazan sus datos.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Datos de la semana</h2>
+    <p class="hint">Deja en blanco lo que no tengas. Aparecerá como guion en la presentación.</p>
+    <div id="lista"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Fotos</h2>
+    <p class="hint">Toca una para cambiarla. Se recorta sola con la forma del diseño.</p>
+    <div class="thumbs" id="thumbs"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Semanas guardadas</h2>
+    <div class="hist" id="hist"></div>
+  </section>
+
+  <div class="acciones">
+    <button class="act primary" id="btn-save">Guardar semana</button>
+    <button class="act ghost" id="btn-pdf">Descargar PDF</button>
+    <button class="act ghost" id="btn-ppt">Descargar PowerPoint</button>
+  </div>
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+</div>
+
+<!-- hoja de foto -->
+<div class="sheet oculto" id="sheet">
+  <div class="sheet-caja" role="dialog" aria-modal="true" aria-labelledby="sheet-tit">
+    <img id="sheet-img" alt="">
+    <h3 id="sheet-tit"></h3>
+    <p id="sheet-sub"></p>
+    <button class="act primary" id="sheet-azar">Cambiar por otra foto</button>
+    <button class="act ghost" id="sheet-subir">Subir una foto mía</button>
+    <button class="act ghost oculto" id="sheet-quitar">Volver a la foto original</button>
+    <button class="act plano" id="sheet-cerrar">Cancelar</button>
+  </div>
+</div>
+
+<input type="file" id="file" accept="image/*" hidden>
+<canvas id="cv"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
