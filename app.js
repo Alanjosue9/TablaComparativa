@@ -287,6 +287,21 @@ function recorte(src, shape){
     im.src = src;
   });
 }
+function aDataURL(src){
+  return new Promise((res,rej) => {
+    const im = new Image();
+    im.crossOrigin = "anonymous";
+    im.onerror = () => rej(new Error("no se pudo cargar "+src));
+    im.onload = () => {
+      const c = document.createElement("canvas");
+      c.width = im.width; c.height = im.height;
+      c.getContext("2d").drawImage(im,0,0);
+      res(c.toDataURL("image/png"));
+    };
+    im.src = src;
+  });
+}
+
 function ovalo(src){
   return new Promise((res,rej) => {
     const im = new Image();
@@ -315,8 +330,9 @@ async function armar(){
   const imgs = {};
   for(const c of CATS) imgs[c.k] = await recorte(fotoActual(c.k), c.s);
   imgs.portada = await ovalo(fotoActual("portada"));
+  const logo = await aDataURL("fotos/logo.png");
   return {
-    p, txt: periodoTxt(p),
+    p, txt: periodoTxt(p), logo,
     bgS: fondo(1400,1050,[246,245,240]),
     bgC: fondo(1400,1050,[243,242,236]),
     imgs,
@@ -348,7 +364,7 @@ async function hacerPDF(){
   const col = c => c==="up"?UP : c==="down"?DOWN : SOFT;
 
   doc2.addImage(D.bgC,"JPEG",0,0,10,7.5);
-  doc2.addImage("fotos/logo.png","PNG",.59,.50,.95,.95);
+  doc2.addImage(D.logo,"PNG",.59,.50,.95,.95);
   doc2.addImage(D.imgs.portada.data,"PNG",4.57,.35,5.35,4.30);
   doc2.setTextColor(...INK); doc2.setFont("helvetica","bold"); doc2.setFontSize(60);
   doc2.text("Tabla",.75,2.66);
@@ -379,8 +395,14 @@ async function hacerPDF(){
     doc2.setTextColor(...MUT); doc2.setFont("helvetica","bold"); doc2.setFontSize(13);
     doc2.text("ACTUAL",1.35,3.85);
     if(it.arrow){
+      // los triangulos se dibujan: las fuentes base del PDF no tienen los simbolos
+      const cx = 2.83, cy = 3.82, r = 0.085;
+      doc2.setFillColor(...col(it.col));
+      if(it.col === "up")        doc2.triangle(cx-r, cy+r, cx+r, cy+r, cx, cy-r, "F");
+      else if(it.col === "down") doc2.triangle(cx-r, cy-r, cx+r, cy-r, cx, cy+r, "F");
+      else                       doc2.rect(cx-r, cy-0.025, r*2, 0.05, "F");
       doc2.setTextColor(...col(it.col)); doc2.setFont("helvetica","bold"); doc2.setFontSize(19);
-      doc2.text(`${it.arrow} ${it.delta}`,2.75,3.88);
+      doc2.text(it.delta, 3.05, 3.88);
     }
     doc2.setTextColor(...SOFT); doc2.setFont("helvetica","bold");
     doc2.setFontSize(it.money?26:48); doc2.text(it.fAnt,.35,5.46);
@@ -442,7 +464,7 @@ async function hacerPPT(){
 
   const s = pres.addSlide();
   s.addImage({data:D.bgC,x:0,y:0,w:10,h:7.5});
-  s.addImage({path:"fotos/logo.png",x:.59,y:.50,w:.95,h:.95});
+  s.addImage({data:D.logo,x:.59,y:.50,w:.95,h:.95});
   s.addImage({data:D.imgs.portada.data,x:4.57,y:.35,w:5.35,h:4.30,
     shadow:{type:"outer",color:"000000",blur:30,offset:10,angle:90,opacity:.22}});
   s.addText("Tabla",{x:.75,y:1.89,w:6,h:.90,fontFace:TF,fontSize:66,color:INK,isTextBox:true,margin:0,valign:"middle"});
@@ -518,7 +540,10 @@ async function correr(fn, etiqueta){
   bs.forEach(b => b.disabled = true);
   say(`Armando el ${etiqueta}…`,"work");
   try{ await fn(); say(`${etiqueta} descargado.`,"ok"); }
-  catch(e){ console.error(e); say(`No se pudo armar el ${etiqueta}. Recarga la página e inténtalo otra vez.`,"err"); }
+  catch(e){
+    console.error(e);
+    say(`No se pudo armar el ${etiqueta}: ${e && e.message ? e.message : e}`, "err");
+  }
   bs.forEach(b => b.disabled = false);
 }
 
