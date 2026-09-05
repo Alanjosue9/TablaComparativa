@@ -1,5 +1,5 @@
-import { firebaseConfig, iglesia, maxFotosPorCarpeta } from "./config.js";
-import { semanas as SEMILLA, anio as SEM_ANIO, trimestre as SEM_TRI } from "./datos-iniciales.js";
+import { firebaseConfig, iglesia, maxFotosPorCarpeta } from "./config.js?v5-2026.09.05";
+import { semanas as SEMILLA, anio as SEM_ANIO, trimestre as SEM_TRI } from "./datos-iniciales.js?v5-2026.09.05";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot,
@@ -548,7 +548,9 @@ async function correr(fn, etiqueta){
 }
 
 /* ═══════════ arranque ═══════════ */
+const VERSION = "v5-2026.09.05";
 async function iniciar(){
+  el("version").textContent = VERSION;
   const hoy = hoyPeriodo();
   el("f-sem").value = hoy.semana;
   el("f-tri").value = hoy.trimestre;
