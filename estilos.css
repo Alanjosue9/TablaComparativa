@@ -100,3 +100,5 @@ canvas{display:none}
 @media (prefers-reduced-motion:no-preference){
   .primary{transition:background .15s} .ghost{transition:border-color .15s,color .15s}
 }
+
+.version{text-align:center;font-size:.7rem;color:var(--muted);margin:14px 0 0}
