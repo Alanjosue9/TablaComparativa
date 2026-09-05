@@ -50,6 +50,13 @@
     <div class="thumbs" id="thumbs"></div>
   </section>
 
+  <div id="semilla" class="aviso oculto">
+    <b>Historial del trimestre listo para cargar</b>
+    <span>Hay <b id="semilla-n">0</b> semanas capturadas de la tabla en papel que
+    todavía no están en la base.</span>
+    <button class="act primary" id="btn-semilla" style="margin-top:10px">Cargar historial del trimestre</button>
+  </div>
+
   <section class="panel">
     <h2>Semanas guardadas</h2>
     <div class="hist" id="hist"></div>
@@ -59,6 +66,7 @@
     <button class="act primary" id="btn-save">Guardar semana</button>
     <button class="act ghost" id="btn-pdf">Descargar PDF</button>
     <button class="act ghost" id="btn-ppt">Descargar PowerPoint</button>
+    <button class="act ghost" id="btn-xls">Descargar historial en Excel</button>
   </div>
   <p class="status" id="status" role="status" aria-live="polite"></p>
 </div>
@@ -81,6 +89,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgen.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>

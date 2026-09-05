@@ -6,12 +6,12 @@
 // ─────────────────────────────────────────────────────────────
 
 export const firebaseConfig = {
-  apiKey:            "AIzaSyDNwCNdWEZpVSnO8MXb9ta4diWKlTOwy7Y",
-  authDomain:        "tabla-15321.firebaseapp.com",
-  projectId:         "tabla-15321",
-  storageBucket:     "tabla-15321.firebasestorage.app",
-  messagingSenderId: "288826334447",
-  appId:             "1:288826334447:web:bf5b37ab5cec98a0f64f1a",
+  apiKey:            "PEGA_AQUI_TU_API_KEY",
+  authDomain:        "PEGA_AQUI.firebaseapp.com",
+  projectId:         "PEGA_AQUI_TU_PROJECT_ID",
+  storageBucket:     "PEGA_AQUI.appspot.com",
+  messagingSenderId: "PEGA_AQUI",
+  appId:             "PEGA_AQUI",
 };
 
 // Datos de la iglesia que aparecen en la presentación.
