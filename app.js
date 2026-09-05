@@ -548,7 +548,7 @@ async function correr(fn, etiqueta){
 }
 
 /* ═══════════ arranque ═══════════ */
-const VERSION = "v5-2026.09.05";
+const VERSION = "v5-2026.09.05b";
 async function iniciar(){
   el("version").textContent = VERSION;
   const hoy = hoyPeriodo();
